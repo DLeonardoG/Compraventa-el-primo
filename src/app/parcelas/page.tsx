@@ -1,8 +1,10 @@
 import { ParcelFilters } from "@/components/parcels/ParcelFilters";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { getParcels } from "@/lib/sheets";
+import { getParcels } from "@/lib/inventory";
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Parcelas",
@@ -16,22 +18,19 @@ export default async function ParcelasPage({
   const params = await searchParams;
   const parcels = await getParcels();
 
-  const q = typeof params.q === "string" ? params.q : "";
-  const minPrice = typeof params.minPrice === "string" ? params.minPrice : "";
-  const maxPrice = typeof params.maxPrice === "string" ? params.maxPrice : "";
-
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       <SectionHeading
-        eyebrow="Terrenos"
+        eyebrow="Inmobiliaria"
         title="Parcelas y lotes"
-        description="Filtra por ubicación, área, precio y disponibilidad."
+        description="Filtra por ubicación, área mínima, rango de precio y estado."
       />
       <ParcelFilters
         parcels={parcels}
-        initialQuery={q}
-        initialMinPrice={minPrice}
-        initialMaxPrice={maxPrice}
+        initialQuery={typeof params.q === "string" ? params.q : ""}
+        initialMinPrice={typeof params.minPrice === "string" ? params.minPrice : ""}
+        initialMaxPrice={typeof params.maxPrice === "string" ? params.maxPrice : ""}
+        initialAreaMin={typeof params.areaMin === "string" ? params.areaMin : ""}
       />
     </div>
   );

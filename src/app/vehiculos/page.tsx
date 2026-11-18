@@ -1,8 +1,10 @@
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { VehicleFilters } from "@/components/vehicles/VehicleFilters";
-import { getVehicles } from "@/lib/sheets";
+import { getVehicles } from "@/lib/inventory";
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Vehículos",
@@ -16,22 +18,20 @@ export default async function VehiculosPage({
   const params = await searchParams;
   const vehicles = await getVehicles();
 
-  const q = typeof params.q === "string" ? params.q : "";
-  const minPrice = typeof params.minPrice === "string" ? params.minPrice : "";
-  const maxPrice = typeof params.maxPrice === "string" ? params.maxPrice : "";
-
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       <SectionHeading
-        eyebrow="Catálogo"
-        title="Vehículos disponibles"
-        description="Filtra por marca, año, transmisión, precio y estado en tiempo real."
+        eyebrow="Inventario"
+        title="Catálogo de vehículos"
+        description="Filtra por marca, línea, año, transmisión, combustible y presupuesto. Oculta vendidos y ordena resultados."
       />
       <VehicleFilters
         vehicles={vehicles}
-        initialQuery={q}
-        initialMinPrice={minPrice}
-        initialMaxPrice={maxPrice}
+        initialQuery={typeof params.q === "string" ? params.q : ""}
+        initialMarca={typeof params.marca === "string" ? params.marca : ""}
+        initialMinPrice={typeof params.minPrice === "string" ? params.minPrice : ""}
+        initialMaxPrice={typeof params.maxPrice === "string" ? params.maxPrice : ""}
+        initialAnioMin={typeof params.anioMin === "string" ? params.anioMin : ""}
       />
     </div>
   );

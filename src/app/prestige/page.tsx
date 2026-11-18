@@ -1,10 +1,12 @@
-import { ImportRequestForm } from "@/components/forms/ImportRequestForm";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { VehicleCard } from "@/components/vehicles/VehicleCard";
-import { getPrestigeVehicles } from "@/lib/sheets";
+import { siteConfig } from "@/config/site.config";
+import { getPrestigeVehicles } from "@/lib/inventory";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Línea Prestige & Importación",
+  title: "Línea Prestige",
 };
 
 export default async function PrestigePage() {
@@ -12,54 +14,37 @@ export default async function PrestigePage() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-      <section className="relative mb-12 overflow-hidden rounded-2xl border border-accent/20 bg-gradient-to-br from-[#16120c] to-[#0d1524] p-8 sm:p-12">
-        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">
+      <section className="mb-12 border border-border bg-[#0c0c0f] p-8 sm:p-12">
+        <div className="h-px w-16 bg-accent" />
+        <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.22em] text-accent">
           Prestige Collection
         </p>
-        <h1 className="mt-3 max-w-2xl text-3xl font-extrabold tracking-tight sm:text-4xl">
-          Línea Prestige & Importación bajo pedido
+        <h1 className="heading-display mt-3 max-w-2xl text-3xl font-extrabold sm:text-4xl">
+          Línea Prestige
         </h1>
         <p className="mt-4 max-w-2xl text-sm leading-relaxed text-zinc-300 sm:text-base">
-          Una curaduría más sobria para vehículos premium y un servicio de
-          importación directa con acompañamiento comercial, documental y de
-          entrega.
+          Vitrina exclusiva de {siteConfig.companyName} con atención personalizada
+          VIP, unidades curadas y acompañamiento comercial discreto.
         </p>
       </section>
 
       <SectionHeading
-        eyebrow="Inventario exclusivo"
-        title="Unidades Prestige e Importación"
-        description="Filtrado automáticamente por línea Prestige o Importacion."
+        eyebrow="Inventario VIP"
+        title="Unidades Prestige disponibles"
+        description="Filtrado exclusivamente por línea Prestige."
       />
 
       {vehicles.length ? (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {vehicles.map((vehicle) => (
             <VehicleCard key={vehicle.id} vehicle={vehicle} />
           ))}
         </div>
       ) : (
-        <div className="rounded-xl border border-dashed border-border p-10 text-center text-muted">
+        <div className="border border-dashed border-border p-10 text-center text-muted">
           Pronto publicaremos nuevas unidades Prestige.
         </div>
       )}
-
-      <section className="mt-16 grid gap-8 lg:grid-cols-2">
-        <div>
-          <SectionHeading
-            eyebrow="Servicio"
-            title="Importación directa a tu medida"
-            description="Cuéntanos la marca, modelo y presupuesto. Nosotros gestionamos la búsqueda y la importación."
-            className="mb-4"
-          />
-          <ul className="space-y-3 text-sm text-muted">
-            <li>• Búsqueda internacional según tu brief</li>
-            <li>• Validación de historial y estado</li>
-            <li>• Acompañamiento en nacionalización y entrega</li>
-          </ul>
-        </div>
-        <ImportRequestForm />
-      </section>
     </div>
   );
 }
