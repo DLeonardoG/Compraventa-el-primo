@@ -20,7 +20,9 @@ export default async function AdminDashboardPage() {
       unreadJobs,
     ] = await Promise.all([
       prisma.vehicle.count({ where: { estado: "DISPONIBLE" } }),
-      prisma.vehicle.count({ where: { estado: "VENDIDO" } }),
+      prisma.vehicle.count({
+        where: { estado: { in: ["RESERVADO", "VENDIDO"] } },
+      }),
       prisma.parcel.count({ where: { estado: { not: "VENDIDO" } } }),
       prisma.lead.count({ where: { leido: false } }),
       prisma.jobApplication.count({ where: { leido: false } }),
@@ -31,10 +33,10 @@ export default async function AdminDashboardPage() {
 
   const cards = [
     { label: "Vehículos Disponibles", value: availableVehicles },
-    { label: "Vehículos Vendidos", value: soldVehicles },
+    { label: "Reservados / Vendidos", value: soldVehicles },
     { label: "Parcelas Activas", value: activeParcels },
     { label: "Solicitudes sin leer", value: unreadLeads },
-    { label: "Postulaciones sin leer", value: unreadJobs },
+    { label: "Hojas de vida sin revisar", value: unreadJobs },
   ];
 
   return (

@@ -33,7 +33,7 @@ async function optimizeImage(file: File): Promise<File> {
   bitmap.close();
 
   const blob = await new Promise<Blob | null>((resolve) =>
-    canvas.toBlob(resolve, "image/webp", 0.84),
+    canvas.toBlob(resolve, "image/webp", 0.85),
   );
   if (!blob) return file;
   const name = file.name.replace(/\.[^.]+$/, "") + ".webp";
