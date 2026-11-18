@@ -64,14 +64,14 @@ export default function ContactoPage() {
               <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-accent" strokeWidth={1.5} />
               <span>
                 <span className="block font-semibold text-foreground">Dirección</span>
-                {siteConfig.address}
+                {siteConfig.address}, {siteConfig.city}
               </span>
             </p>
             <p className="flex items-start gap-3">
               <Phone className="mt-0.5 h-5 w-5 shrink-0 text-accent" strokeWidth={1.5} />
               <span>
                 <span className="block font-semibold text-foreground">Teléfono</span>
-                {siteConfig.phone}
+                {siteConfig.whatsappDisplay}
               </span>
             </p>
             <p className="flex items-start gap-3">
@@ -86,7 +86,7 @@ export default function ContactoPage() {
             </p>
             <a
               href={buildWhatsAppUrl(
-                `Hola ${siteConfig.companyName}, deseo ${siteConfig.whatsappSalesLabel.toLowerCase()}.`,
+                `Hola ${siteConfig.companyName}, deseo ${siteConfig.whatsappSalesLabel}.`,
               )}
               target="_blank"
               rel="noopener noreferrer"
