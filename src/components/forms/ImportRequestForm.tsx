@@ -1,7 +1,10 @@
 "use client";
 
+import { MessageCircle } from "lucide-react";
 import { useState, type FormEvent } from "react";
+import { createLead } from "@/app/actions/leads";
 import { siteConfig } from "@/config/site.config";
+import { buildWhatsAppUrl } from "@/lib/formatters";
 
 export function ImportRequestForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -13,61 +16,70 @@ export function ImportRequestForm() {
     const data = new FormData(form);
 
     const payload = {
-      type: "import_request",
-      name: String(data.get("name") || ""),
-      phone: String(data.get("phone") || ""),
-      email: String(data.get("email") || ""),
       brand: String(data.get("brand") || ""),
       model: String(data.get("model") || ""),
       year: String(data.get("year") || ""),
+      color: String(data.get("color") || ""),
       budget: String(data.get("budget") || ""),
-      notes: String(data.get("notes") || ""),
+      name: String(data.get("name") || ""),
+      phone: String(data.get("phone") || ""),
     };
 
-    if (!siteConfig.integrations.appsScriptUrl) {
+    setStatus("loading");
+    const result = await createLead({
+      tipo: "IMPORTACION",
+      nombre: payload.name,
+      telefono: payload.phone,
+      detalle: payload,
+    });
+
+    if (!result.ok) {
       setStatus("error");
-      setMessage("Configura appsScriptUrl en site.config.ts para enviar solicitudes.");
+      setMessage(result.error);
       return;
     }
 
-    setStatus("loading");
-    try {
-      const response = await fetch(siteConfig.integrations.appsScriptUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      if (!response.ok) throw new Error("Error al enviar");
-      setStatus("success");
-      setMessage("Solicitud enviada. Un asesor te contactará pronto.");
-      form.reset();
-    } catch {
-      setStatus("error");
-      setMessage("No se pudo enviar la solicitud. Intenta de nuevo o escríbenos por WhatsApp.");
-    }
+    const wa = `Hola ${siteConfig.companyName}, solicito importación: ${payload.brand} ${payload.model} ${payload.year}, color ${payload.color}, presupuesto ${payload.budget}. Contacto: ${payload.name} / ${payload.phone}.`;
+    window.open(buildWhatsAppUrl(wa), "_blank", "noopener,noreferrer");
+    setStatus("success");
+    setMessage("Solicitud preparada. Continuamos por WhatsApp.");
+    form.reset();
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4 rounded-xl border border-border bg-card p-5">
-      <h3 className="text-lg font-bold">Solicitud de vehículo a pedido</h3>
+    <form onSubmit={onSubmit} className="space-y-4 border border-border bg-card p-5">
+      <h3 className="heading-display text-lg font-bold">
+        Solicitar Vehículo por Importación
+      </h3>
       <div className="grid gap-3 sm:grid-cols-2">
-        <input name="name" required placeholder="Nombre completo" className="input-field" />
-        <input name="phone" required placeholder="WhatsApp" className="input-field" />
-        <input name="email" type="email" required placeholder="Correo" className="input-field" />
-        <input name="budget" placeholder="Presupuesto aproximado" className="input-field" />
-        <input name="brand" required placeholder="Marca deseada" className="input-field" />
-        <input name="model" required placeholder="Modelo deseado" className="input-field" />
-        <input name="year" placeholder="Año deseado" className="input-field sm:col-span-2" />
-        <textarea
-          name="notes"
-          rows={4}
-          placeholder="Detalles adicionales (color, versión, extras...)"
+        <input name="brand" required placeholder="Marca" className="input-field" />
+        <input name="model" required placeholder="Modelo" className="input-field" />
+        <input name="year" placeholder="Año" className="input-field" />
+        <input name="color" placeholder="Color preferido" className="input-field" />
+        <input
+          name="budget"
+          placeholder="Presupuesto estimado"
           className="input-field sm:col-span-2"
         />
+        <input name="name" required placeholder="Nombre" className="input-field" />
+        <input name="phone" required placeholder="WhatsApp" className="input-field" />
       </div>
-      <button type="submit" className="btn-primary" disabled={status === "loading"}>
-        {status === "loading" ? "Enviando..." : "Enviar solicitud"}
-      </button>
+      <div className="flex flex-wrap gap-2">
+        <button type="submit" className="btn-champagne" disabled={status === "loading"}>
+          {status === "loading" ? "Enviando..." : "Enviar solicitud"}
+        </button>
+        <a
+          href={buildWhatsAppUrl(
+            `Hola ${siteConfig.companyName}, quiero información sobre importación directa bajo pedido.`,
+          )}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-whatsapp"
+        >
+          <MessageCircle className="h-4 w-4" strokeWidth={1.5} />
+          WhatsApp directo
+        </a>
+      </div>
       {message ? (
         <p className={`text-sm ${status === "success" ? "text-emerald-400" : "text-red-400"}`}>
           {message}
