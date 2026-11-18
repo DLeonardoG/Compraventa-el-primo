@@ -5,6 +5,15 @@ import { useState } from "react";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { cn } from "@/lib/utils";
 
+function isHttpUrl(value: string): boolean {
+  try {
+    const url = new URL(value);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
 type SafeImageProps = {
   src?: string;
   alt: string;
@@ -28,7 +37,7 @@ export function SafeImage({
 }: SafeImageProps) {
   const [failed, setFailed] = useState(false);
 
-  if (!src || failed) {
+  if (!src || failed || !isHttpUrl(src)) {
     return <ImagePlaceholder className={cn(fill && "absolute inset-0", className)} />;
   }
 
