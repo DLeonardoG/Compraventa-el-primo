@@ -9,9 +9,9 @@ export function FeaturedParcels({ parcels }: { parcels: Parcel[] }) {
     <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="mb-8 flex items-end justify-between gap-4">
         <SectionHeading
-          eyebrow="Inversión en tierra"
-          title="Parcelas y Lotes en Venta"
-          description="Oportunidades residenciales y campestres con información clara de área, servicios y ubicación."
+          eyebrow="Inmobiliaria"
+          title="Parcelas y Lotes Destacados"
+          description="Área, servicios, topografía y documentación claros desde la ficha."
           className="mb-0"
         />
         <Link
@@ -19,11 +19,11 @@ export function FeaturedParcels({ parcels }: { parcels: Parcel[] }) {
           className="hidden items-center gap-1 text-sm font-semibold text-accent hover:underline sm:inline-flex"
         >
           Ver parcelas
-          <ArrowRight className="h-4 w-4" />
+          <ArrowRight className="h-4 w-4" strokeWidth={1.5} />
         </Link>
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {parcels.map((parcel) => (
           <ParcelCard key={parcel.id} parcel={parcel} />
         ))}
