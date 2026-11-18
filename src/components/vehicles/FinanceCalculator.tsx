@@ -10,16 +10,15 @@ import {
 } from "@/lib/formatters";
 import { cn } from "@/lib/utils";
 
-const TERMS = [12, 24, 36, 48, 60, 72];
-
 type FinanceCalculatorProps = {
   price: number;
   title: string;
 };
 
 export function FinanceCalculator({ price, title }: FinanceCalculatorProps) {
+  const terms = siteConfig.financing.terms;
   const [downPaymentPct, setDownPaymentPct] = useState(30);
-  const [months, setMonths] = useState(48);
+  const [months, setMonths] = useState<number>(terms[3] ?? 48);
   const rate = siteConfig.financing.defaultMonthlyRate;
 
   const result = useMemo(() => {
@@ -66,8 +65,8 @@ export function FinanceCalculator({ price, title }: FinanceCalculatorProps) {
           </span>
           <input
             type="range"
-            min={10}
-            max={70}
+            min={siteConfig.financing.minDownPaymentPercent}
+            max={siteConfig.financing.maxDownPaymentPercent}
             value={downPaymentPct}
             onChange={(e) => setDownPaymentPct(Number(e.target.value))}
             className="w-full accent-[var(--accent)]"
@@ -77,7 +76,7 @@ export function FinanceCalculator({ price, title }: FinanceCalculatorProps) {
         <div>
           <p className="mb-2 text-sm text-muted">Plazo en meses</p>
           <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
-            {TERMS.map((term) => (
+            {terms.map((term) => (
               <button
                 key={term}
                 type="button"
