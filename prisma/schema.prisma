@@ -1,0 +1,107 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Vehicle {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  marca       String
+  modelo      String
+  anio        Int
+  kilometraje Int
+  transmision String
+  combustible String
+  motor       String
+  traccion    String
+  color       String
+  placa       String
+  blindaje    String   @default("Sin blindaje")
+  precio      Float
+  linea       String   @default("NORMAL")
+  estado      String   @default("DISPONIBLE")
+  destacado   Boolean  @default(false)
+  descripcion String   @db.Text
+  media       Media[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([marca])
+  @@index([linea])
+  @@index([estado])
+  @@index([destacado])
+}
+
+model Parcel {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  titulo        String
+  ubicacion     String
+  areaM2        Float
+  precio        Float
+  servicios     String
+  topografia    String
+  documentacion String
+  estado        String   @default("DISPONIBLE")
+  destacado     Boolean  @default(false)
+  descripcion   String   @db.Text
+  media         Media[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([ubicacion])
+  @@index([estado])
+  @@index([destacado])
+}
+
+model Media {
+  id        String   @id @default(cuid())
+  url       String
+  key       String
+  tipo      String
+  orden     Int      @default(0)
+  esPortada Boolean  @default(false)
+  vehicleId String?
+  vehicle   Vehicle? @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+  parcelId  String?
+  parcel    Parcel?  @relation(fields: [parcelId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@index([vehicleId])
+  @@index([parcelId])
+  @@index([orden])
+}
+
+model Lead {
+  id          String   @id @default(cuid())
+  tipo        String
+  nombre      String
+  telefono    String
+  email       String?
+  detalleJson String   @db.Text
+  leido       Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  @@index([tipo])
+  @@index([leido])
+  @@index([createdAt])
+}
+
+model JobApplication {
+  id        String   @id @default(cuid())
+  nombre    String
+  telefono  String
+  email     String
+  cargo     String
+  cvUrl     String
+  cvKey     String
+  leido     Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([leido])
+  @@index([createdAt])
+}
