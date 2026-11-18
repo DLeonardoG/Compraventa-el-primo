@@ -18,7 +18,7 @@ export function Navbar() {
     <header className="sticky top-0 z-50 glass-nav">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
         <Link href="/" className="group flex flex-col leading-tight">
-          <span className="heading-display text-lg font-extrabold text-foreground sm:text-xl">
+          <span className="heading-display text-lg font-bold text-foreground sm:text-xl">
             {siteConfig.shortName}
           </span>
           <span className="text-[9px] uppercase tracking-[0.2em] text-muted transition-colors group-hover:text-accent">

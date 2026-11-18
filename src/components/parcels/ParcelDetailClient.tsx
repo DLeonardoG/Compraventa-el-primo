@@ -78,7 +78,7 @@ export function ParcelDetailClient({ parcel }: { parcel: Parcel }) {
         <aside className="lg:sticky lg:top-24 lg:self-start space-y-4">
           <div className="border border-border bg-card p-5">
             <StatusBadge status={parcel.estado} />
-            <h1 className="heading-display mt-3 text-2xl font-extrabold sm:text-3xl">
+            <h1 className="heading-display mt-3 text-2xl font-bold sm:text-3xl">
               {parcel.titulo}
             </h1>
             <p className="mt-2 font-tech text-sm text-muted">{parcel.ubicacion}</p>

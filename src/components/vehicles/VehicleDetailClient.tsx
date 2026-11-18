@@ -119,7 +119,7 @@ export function VehicleDetailClient({ vehicle, similar }: VehicleDetailClientPro
               <StatusBadge status={vehicle.estado} />
               <LineBadge linea={vehicle.linea} />
             </div>
-            <h1 className="heading-display mt-3 text-2xl font-extrabold sm:text-3xl">
+            <h1 className="heading-display mt-3 text-2xl font-bold sm:text-3xl">
               {title}
             </h1>
             <p className="mt-2 font-tech text-sm text-muted">
@@ -147,7 +147,7 @@ export function VehicleDetailClient({ vehicle, similar }: VehicleDetailClientPro
                 Agendar Cita / Test Drive
               </button>
               <a href="#simulador" className="btn-outline w-full">
-                Simular Financiación
+                Simular Crédito
               </a>
             </div>
           </div>

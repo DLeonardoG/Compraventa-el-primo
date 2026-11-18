@@ -19,7 +19,7 @@ export default async function PrestigePage() {
         <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.22em] text-accent">
           Prestige Collection
         </p>
-        <h1 className="heading-display mt-3 max-w-2xl text-3xl font-extrabold sm:text-4xl">
+        <h1 className="heading-display mt-3 max-w-2xl text-3xl font-bold sm:text-4xl">
           Línea Prestige
         </h1>
         <p className="mt-4 max-w-2xl text-sm leading-relaxed text-zinc-300 sm:text-base">
