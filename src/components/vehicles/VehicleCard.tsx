@@ -49,15 +49,8 @@ export function VehicleCard({ vehicle }: VehicleCardProps) {
           className="transition-transform duration-500 group-hover:scale-105"
         />
         <div className="absolute left-2 top-2 z-20 flex flex-wrap gap-1.5">
-          {vehicle.linea === "PRESTIGE" ? (
-            <LineBadge linea={vehicle.linea} />
-          ) : (
-            <StatusBadge status={vehicle.estado} />
-          )}
-          {vehicle.linea === "IMPORTACION" ? <LineBadge linea={vehicle.linea} /> : null}
-          {vehicle.linea === "PRESTIGE" && vehicle.estado !== "DISPONIBLE" ? (
-            <StatusBadge status={vehicle.estado} />
-          ) : null}
+          <StatusBadge status={vehicle.estado} />
+          <LineBadge linea={vehicle.linea} />
         </div>
         <span className="absolute bottom-2 right-2 z-20 border border-border bg-black/70 px-2 py-0.5 font-tech text-[10px] text-zinc-300">
           {vehicle.media.length} medio{vehicle.media.length === 1 ? "" : "s"}
@@ -77,10 +70,10 @@ export function VehicleCard({ vehicle }: VehicleCardProps) {
         <div className="meta-split">
           <span>{formatKm(vehicle.kilometraje)}</span>
           <span>{vehicle.transmision}</span>
-          <span>{vehicle.combustible}</span>
+          <span>{vehicle.motor}</span>
         </div>
 
-        <p className="price-num text-lg font-semibold text-foreground">
+        <p className="price-num text-lg font-semibold text-accent">
           {formatCOP(vehicle.precio)}
         </p>
 
