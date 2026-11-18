@@ -12,23 +12,23 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 const pillars = [
   {
     icon: BadgeCheck,
-    title: "Peritaje Certificado",
-    text: "Revisión técnica y transparencia del estado real de cada unidad.",
+    title: "Peritaje certificado",
+    text: "Revisión técnica y estado real de cada unidad antes de publicarla.",
   },
   {
     icon: HandCoins,
-    title: "Financiación hasta 100%",
-    text: "Simulación orientativa y acompañamiento con aliados financieros.",
+    title: "Financiación a medida",
+    text: "Simulación en sala y acompañamiento con aliados financieros.",
   },
   {
     icon: FileCheck2,
-    title: "Traspaso Seguro",
-    text: "Gestión documental clara para un traspaso inmediato y ordenado.",
+    title: "Traspaso ágil",
+    text: "Gestión documental ordenada para cerrar sin vueltas innecesarias.",
   },
   {
     icon: RefreshCcw,
-    title: "Retoma de Usados",
-    text: "Recibimos tu usado en parte de pago o consignación en vitrina.",
+    title: "Respaldo garantizado",
+    text: "Consignación, retoma y postventa con un mismo equipo comercial.",
   },
 ];
 
