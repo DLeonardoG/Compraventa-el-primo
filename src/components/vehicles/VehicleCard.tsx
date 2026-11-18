@@ -1,8 +1,17 @@
+"use client";
+
 import Link from "next/link";
-import { Calendar, Gauge, Settings2 } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { SafeImage } from "@/components/ui/SafeImage";
-import { StatusBadge } from "@/components/ui/StatusBadge";
-import { formatCOP, formatKm } from "@/lib/format";
+import { LineBadge, StatusBadge } from "@/components/ui/StatusBadge";
+import { coverUrl } from "@/lib/inventory-client";
+import { lineLabel } from "@/lib/labels";
+import {
+  buildWhatsAppUrl,
+  formatCOP,
+  formatKm,
+  vehicleInterestMessage,
+} from "@/lib/formatters";
 import { cn } from "@/lib/utils";
 import type { Vehicle } from "@/types/inventory";
 
@@ -11,59 +20,85 @@ type VehicleCardProps = {
 };
 
 export function VehicleCard({ vehicle }: VehicleCardProps) {
-  const sold = vehicle.estado === "Vendido";
+  const sold = vehicle.estado === "VENDIDO";
+  const href = `/vehiculos/${vehicle.slug}`;
+  const cover = coverUrl(vehicle.media);
+  const whatsappUrl = buildWhatsAppUrl(
+    vehicleInterestMessage(
+      vehicle.marca,
+      vehicle.modelo,
+      vehicle.anio,
+      vehicle.precio,
+    ),
+  );
 
   return (
-    <Link
-      href={`/vehiculos/${vehicle.id}`}
+    <article
       className={cn(
-        "group surface-card overflow-hidden rounded-xl transition-all duration-300 hover:-translate-y-1 hover:border-accent/40",
+        "group surface-card overflow-hidden transition-colors",
         sold && "opacity-70",
       )}
     >
       <div className="relative aspect-[16/10] overflow-hidden">
+        <Link href={href} className="absolute inset-0 z-10" aria-label={`Ver ficha ${vehicle.marca} ${vehicle.modelo}`} />
         <SafeImage
-          src={vehicle.fotos[0]}
+          src={cover}
           alt={`${vehicle.marca} ${vehicle.modelo}`}
           fill
           sizes="(max-width: 768px) 100vw, 33vw"
           className="transition-transform duration-500 group-hover:scale-105"
         />
-        <div className="absolute left-3 top-3">
-          <StatusBadge status={vehicle.estado} />
+        <div className="absolute left-2 top-2 z-20 flex flex-wrap gap-1.5">
+          {vehicle.linea === "PRESTIGE" ? (
+            <LineBadge linea={vehicle.linea} />
+          ) : (
+            <StatusBadge status={vehicle.estado} />
+          )}
+          {vehicle.linea === "IMPORTACION" ? <LineBadge linea={vehicle.linea} /> : null}
+          {vehicle.linea === "PRESTIGE" && vehicle.estado !== "DISPONIBLE" ? (
+            <StatusBadge status={vehicle.estado} />
+          ) : null}
         </div>
-        {vehicle.linea !== "Normal" ? (
-          <span className="absolute right-3 top-3 rounded-md bg-black/70 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-accent">
-            {vehicle.linea}
-          </span>
-        ) : null}
+        <span className="absolute bottom-2 right-2 z-20 border border-border bg-black/70 px-2 py-0.5 font-tech text-[10px] text-zinc-300">
+          {vehicle.media.length} medio{vehicle.media.length === 1 ? "" : "s"}
+        </span>
       </div>
 
-      <div className="space-y-3 p-4">
+      <div className="space-y-3 p-3.5">
         <div>
-          <h3 className="text-lg font-bold tracking-tight text-foreground">
+          <p className="font-tech text-[10px] uppercase tracking-[0.14em] text-muted">
+            {vehicle.anio} / {lineLabel(vehicle.linea)}
+          </p>
+          <h3 className="heading-display mt-1 text-base font-bold text-foreground">
             {vehicle.marca} {vehicle.modelo}
           </h3>
-          <p className="mt-1 text-base font-semibold text-accent">
-            {formatCOP(vehicle.precio)}
-          </p>
         </div>
 
-        <div className="flex flex-wrap gap-3 text-xs text-muted">
-          <span className="inline-flex items-center gap-1">
-            <Calendar className="h-3.5 w-3.5" />
-            {vehicle.anio}
-          </span>
-          <span className="inline-flex items-center gap-1">
-            <Gauge className="h-3.5 w-3.5" />
-            {formatKm(vehicle.kilometraje)}
-          </span>
-          <span className="inline-flex items-center gap-1">
-            <Settings2 className="h-3.5 w-3.5" />
-            {vehicle.transmision}
-          </span>
+        <div className="meta-split">
+          <span>{formatKm(vehicle.kilometraje)}</span>
+          <span>{vehicle.transmision}</span>
+          <span>{vehicle.combustible}</span>
+        </div>
+
+        <p className="price-num text-lg font-semibold text-foreground">
+          {formatCOP(vehicle.precio)}
+        </p>
+
+        <div className="grid grid-cols-2 gap-2">
+          <Link href={href} className="btn-outline w-full px-2 py-2.5 text-xs">
+            Ver ficha
+          </Link>
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-whatsapp w-full px-2 py-2.5 text-xs"
+          >
+            <MessageCircle className="h-3.5 w-3.5" strokeWidth={1.5} />
+            WhatsApp
+          </a>
         </div>
       </div>
-    </Link>
+    </article>
   );
 }
