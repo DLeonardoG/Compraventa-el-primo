@@ -12,20 +12,20 @@ export const metadata = {
 
 const steps = [
   {
-    title: "Brief del vehículo",
-    text: "Defines marca, modelo, año, color y presupuesto estimado.",
+    title: "Cotización",
+    text: "Defines marca, modelo, año, color y presupuesto. Te devolvemos opciones reales.",
   },
   {
-    title: "Búsqueda e historial",
-    text: "Localizamos unidades y validamos estado documental y técnico.",
+    title: "Inspección en origen",
+    text: "Revisamos historial, estado mecánico y documentación antes de comprometer el embarque.",
   },
   {
     title: "Nacionalización",
-    text: "Acompañamos importación, impuestos y trámites locales.",
+    text: "Acompañamos impuestos, trámites y la llegada del vehículo a Colombia.",
   },
   {
-    title: "Entrega en Colombia",
-    text: "Recibes el vehículo con traspaso ordenado y soporte comercial.",
+    title: "Entrega",
+    text: "Recibes la unidad con traspaso ordenado y soporte comercial del mismo equipo.",
   },
 ];
 
@@ -39,7 +39,7 @@ export default async function ImportacionPage() {
         <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.22em] text-accent">
           Importación directa
         </p>
-        <h1 className="heading-display mt-3 max-w-2xl text-3xl font-extrabold sm:text-4xl">
+        <h1 className="heading-display mt-3 max-w-2xl text-3xl font-bold sm:text-4xl">
           Traemos el vehículo que necesitas
         </h1>
         <p className="mt-4 max-w-2xl text-sm leading-relaxed text-zinc-300 sm:text-base">
