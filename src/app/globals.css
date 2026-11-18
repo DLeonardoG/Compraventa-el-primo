@@ -7,9 +7,12 @@
   --border: #222226;
   --elevated: #18181c;
   --accent: #c5a059;
+  --accent-hover: #d4b26a;
   --whatsapp: #15803d;
   --whatsapp-hover: #166534;
   --muted: #a1a1aa;
+  --subtle: #71717a;
+  --border-hover: #323238;
 }
 
 @theme inline {
@@ -19,10 +22,13 @@
   --color-border: var(--border);
   --color-elevated: var(--elevated);
   --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
   --color-whatsapp: var(--whatsapp);
   --color-whatsapp-hover: var(--whatsapp-hover);
   --color-muted: var(--muted);
-  --font-sans: var(--font-plus-jakarta);
+  --color-subtle: var(--subtle);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-plus-jakarta);
   --font-tech: var(--font-inter);
 }
 
@@ -33,7 +39,7 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-plus-jakarta), ui-sans-serif, sans-serif;
+  font-family: var(--font-inter), ui-sans-serif, sans-serif;
 }
 
 ::selection {
@@ -43,10 +49,12 @@ body {
 
 .font-tech {
   font-family: var(--font-inter), ui-sans-serif, sans-serif;
+  font-variant-numeric: tabular-nums;
 }
 
 .heading-display {
   font-family: var(--font-plus-jakarta), ui-sans-serif, sans-serif;
+  font-weight: 600;
   letter-spacing: -0.02em;
 }
 
@@ -74,9 +82,9 @@ body {
 }
 
 .glass-nav {
-  background: color-mix(in srgb, var(--background) 88%, transparent);
+  background: color-mix(in srgb, #09090b 95%, transparent);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid #222226;
 }
 
 .surface-card {
@@ -86,7 +94,7 @@ body {
 }
 
 .surface-card:hover {
-  background: var(--elevated);
+  border-color: var(--border-hover);
 }
 
 .input-field {
@@ -119,7 +127,7 @@ body {
 }
 
 .btn-champagne:hover {
-  filter: brightness(1.06);
+  background: var(--accent-hover);
 }
 
 .btn-whatsapp {
@@ -172,7 +180,7 @@ body {
 }
 
 .btn-primary:hover {
-  filter: brightness(1.06);
+  background: var(--accent-hover);
 }
 
 .btn-secondary {
@@ -206,6 +214,7 @@ body {
   font-size: 0.7rem;
   color: var(--muted);
   font-family: var(--font-inter), ui-sans-serif, sans-serif;
+  font-variant-numeric: tabular-nums;
 }
 
 .meta-split > span:not(:last-child) {
