@@ -9,6 +9,7 @@ import {
   buildWhatsAppUrl,
   formatArea,
   formatCOP,
+  formatPricePerSqm,
   parcelInterestMessage,
 } from "@/lib/formatters";
 import { cn } from "@/lib/utils";
@@ -67,9 +68,14 @@ export function ParcelCard({ parcel }: ParcelCardProps) {
           <span>{parcel.documentacion || "Escritura"}</span>
         </div>
 
-        <p className="price-num text-lg font-semibold text-foreground">
-          {formatCOP(parcel.precio)}
-        </p>
+        <div>
+          <p className="price-num text-lg font-semibold text-accent">
+            {formatCOP(parcel.precio)}
+          </p>
+          <p className="price-num mt-1 text-xs text-subtle">
+            {formatPricePerSqm(parcel.precio, parcel.area_m2)} / m²
+          </p>
+        </div>
 
         <div className="grid grid-cols-2 gap-2">
           <Link href={href} className="btn-outline w-full px-2 py-2.5 text-xs">
