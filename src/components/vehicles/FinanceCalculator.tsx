@@ -1,12 +1,26 @@
 "use client";
 
+import { MessageCircle } from "lucide-react";
 import { useMemo, useState } from "react";
-import { formatCOP } from "@/lib/format";
+import { siteConfig } from "@/config/site.config";
+import {
+  buildWhatsAppUrl,
+  financeSimulationMessage,
+  formatCOP,
+} from "@/lib/formatters";
+import { cn } from "@/lib/utils";
 
-export function FinanceCalculator({ price }: { price: number }) {
+const TERMS = [12, 24, 36, 48, 60, 72];
+
+type FinanceCalculatorProps = {
+  price: number;
+  title: string;
+};
+
+export function FinanceCalculator({ price, title }: FinanceCalculatorProps) {
   const [downPaymentPct, setDownPaymentPct] = useState(30);
   const [months, setMonths] = useState(48);
-  const [rate, setRate] = useState(1.6);
+  const rate = siteConfig.financing.defaultMonthlyRate;
 
   const result = useMemo(() => {
     const downPayment = price * (downPaymentPct / 100);
@@ -25,66 +39,89 @@ export function FinanceCalculator({ price }: { price: number }) {
     };
   }, [price, downPaymentPct, months, rate]);
 
+  const whatsappUrl = buildWhatsAppUrl(
+    financeSimulationMessage({
+      title,
+      price,
+      downPayment: result.downPayment,
+      months,
+      installment: result.installment,
+    }),
+  );
+
   return (
-    <div className="rounded-xl border border-border bg-card p-5">
-      <h3 className="text-lg font-bold">Calculadora de financiación</h3>
+    <div id="simulador" className="scroll-mt-28 border border-border bg-card p-5">
+      <h3 className="heading-display text-lg font-bold">Simulador de crédito</h3>
       <p className="mt-1 text-sm text-muted">
-        Estimación orientativa. Las condiciones finales dependen de la entidad financiera.
+        Calcula cuota inicial y plazo. {siteConfig.financing.legalNote}
       </p>
 
-      <div className="mt-5 space-y-4">
+      <div className="mt-5 space-y-5">
         <label className="block text-sm">
-          <span className="mb-1 block text-muted">Cuota inicial ({downPaymentPct}%)</span>
+          <span className="mb-2 flex items-center justify-between text-muted">
+            <span>Cuota inicial ({downPaymentPct}%)</span>
+            <span className="price-num font-semibold text-foreground">
+              {formatCOP(result.downPayment)}
+            </span>
+          </span>
           <input
             type="range"
             min={10}
-            max={60}
+            max={70}
             value={downPaymentPct}
             onChange={(e) => setDownPaymentPct(Number(e.target.value))}
             className="w-full accent-[var(--accent)]"
           />
         </label>
-        <label className="block text-sm">
-          <span className="mb-1 block text-muted">Plazo (meses)</span>
-          <select
-            value={months}
-            onChange={(e) => setMonths(Number(e.target.value))}
-            className="input-field"
-          >
-            {[24, 36, 48, 60, 72].map((value) => (
-              <option key={value} value={value}>
-                {value} meses
-              </option>
+
+        <div>
+          <p className="mb-2 text-sm text-muted">Plazo en meses</p>
+          <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
+            {TERMS.map((term) => (
+              <button
+                key={term}
+                type="button"
+                onClick={() => setMonths(term)}
+                className={cn(
+                  "border px-2 py-2 font-tech text-xs transition-colors",
+                  months === term
+                    ? "border-accent text-accent"
+                    : "border-border text-muted hover:border-foreground hover:text-foreground",
+                )}
+              >
+                {term}
+              </button>
             ))}
-          </select>
-        </label>
-        <label className="block text-sm">
-          <span className="mb-1 block text-muted">Tasa mensual estimada (%)</span>
-          <input
-            type="number"
-            step="0.1"
-            min={0}
-            value={rate}
-            onChange={(e) => setRate(Number(e.target.value))}
-            className="input-field"
-          />
-        </label>
+          </div>
+        </div>
       </div>
 
       <dl className="mt-5 space-y-2 border-t border-border pt-4 text-sm">
         <div className="flex justify-between gap-3">
-          <dt className="text-muted">Cuota inicial</dt>
-          <dd className="font-semibold">{formatCOP(result.downPayment)}</dd>
-        </div>
-        <div className="flex justify-between gap-3">
           <dt className="text-muted">Monto a financiar</dt>
-          <dd className="font-semibold">{formatCOP(result.financed)}</dd>
+          <dd className="price-num font-semibold">{formatCOP(result.financed)}</dd>
         </div>
         <div className="flex justify-between gap-3">
-          <dt className="text-muted">Cuota estimada</dt>
-          <dd className="font-bold text-accent">{formatCOP(result.installment)}</dd>
+          <dt className="text-muted">Cuota mensual estimada</dt>
+          <dd className="price-num font-bold text-accent">
+            {formatCOP(result.installment)}
+          </dd>
+        </div>
+        <div className="flex justify-between gap-3 text-xs text-muted">
+          <dt>Tasa referencial mensual</dt>
+          <dd className="font-tech">{rate}%</dd>
         </div>
       </dl>
+
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="btn-whatsapp mt-5 w-full text-sm"
+      >
+        <MessageCircle className="h-4 w-4" strokeWidth={1.5} />
+        Enviar esta simulación por WhatsApp
+      </a>
     </div>
   );
 }
