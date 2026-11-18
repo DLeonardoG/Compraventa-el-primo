@@ -10,7 +10,7 @@ import "./globals.css";
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["500", "600", "700"],
 });
 
 const inter = Inter({
@@ -35,6 +35,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     "--border": siteConfig.theme.border,
     "--elevated": siteConfig.theme.elevated,
     "--accent": siteConfig.theme.accent,
+    "--accent-hover": siteConfig.theme.accentHover,
     "--whatsapp": siteConfig.theme.whatsapp,
     "--whatsapp-hover": siteConfig.theme.whatsappHover,
     "--muted": siteConfig.theme.muted,
