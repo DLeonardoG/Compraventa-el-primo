@@ -24,6 +24,7 @@ export function ParcelFilters({
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [ubicacion, setUbicacion] = useState(initialQuery);
   const [areaMin, setAreaMin] = useState(initialAreaMin);
+  const [areaMax, setAreaMax] = useState("");
   const [minPrice, setMinPrice] = useState(initialMinPrice);
   const [maxPrice, setMaxPrice] = useState(initialMaxPrice);
   const [estado, setEstado] = useState<"" | InventoryStatus>("");
@@ -37,6 +38,7 @@ export function ParcelFilters({
   function clearFilters() {
     setUbicacion("");
     setAreaMin("");
+    setAreaMax("");
     setMinPrice("");
     setMaxPrice("");
     setEstado("");
@@ -53,13 +55,14 @@ export function ParcelFilters({
         if (!matchSelect && !matchText) return false;
       }
       if (areaMin && parcel.area_m2 < Number(areaMin)) return false;
+      if (areaMax && parcel.area_m2 > Number(areaMax)) return false;
       if (minPrice && parcel.precio < Number(minPrice)) return false;
       if (maxPrice && parcel.precio > Number(maxPrice)) return false;
       if (estado && parcel.estado !== estado) return false;
       if (hideSold && parcel.estado === "VENDIDO") return false;
       return true;
     });
-  }, [parcels, ubicacion, areaMin, minPrice, maxPrice, estado, hideSold]);
+  }, [parcels, ubicacion, areaMin, areaMax, minPrice, maxPrice, estado, hideSold]);
 
   const filtersForm = (
     <div className="space-y-3">
@@ -81,13 +84,22 @@ export function ParcelFilters({
         placeholder="Buscar ubicación / título"
         className="input-field"
       />
-      <input
-        type="number"
-        value={areaMin}
-        onChange={(e) => setAreaMin(e.target.value)}
-        placeholder="Área mínima m²"
-        className="input-field"
-      />
+      <div className="grid grid-cols-2 gap-2">
+        <input
+          type="number"
+          value={areaMin}
+          onChange={(e) => setAreaMin(e.target.value)}
+          placeholder="Área mín. m²"
+          className="input-field"
+        />
+        <input
+          type="number"
+          value={areaMax}
+          onChange={(e) => setAreaMax(e.target.value)}
+          placeholder="Área máx. m²"
+          className="input-field"
+        />
+      </div>
       <div className="grid grid-cols-2 gap-2">
         <input
           type="number"
