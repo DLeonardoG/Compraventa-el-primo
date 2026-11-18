@@ -1,6 +1,6 @@
 # Compraventa El Primo S.A.S.
 
-Plantilla white-label Cloud-Light (Next.js + TypeScript + Tailwind) para compraventa de vehículos y parcelas, con CMS en Google Sheets, uploads a Cloudinary y formularios vía Google Apps Script.
+Plantilla white-label Cloud-Light (Next.js + TypeScript + Tailwind + pnpm) para compraventa de vehículos y parcelas, con estética editorial de showroom, CMS en Google Sheets, uploads a Cloudinary y formularios vía Google Apps Script.
 
 ## Arranque rápido
 
@@ -11,51 +11,39 @@ pnpm dev
 
 Abre [http://localhost:3000](http://localhost:3000).
 
-## White-label (clonar para otro cliente)
+## White-label
 
-Edita un solo archivo: [`src/config/site.config.ts`](src/config/site.config.ts)
+Edita [`src/config/site.config.ts`](src/config/site.config.ts):
 
-1. Cambia `name`, `shortName`, contacto, dirección, horarios y redes.
-2. Ajusta colores en `theme` (se inyectan como variables CSS).
-3. Completa `integrations`:
-   - `googleSheetId`
-   - `appsScriptUrl`
-   - `cloudinaryCloudName`
-   - `cloudinaryUploadPreset`
-   - `uploaderPin`
+1. `companyName`, `shortName`, contacto, horarios y redes.
+2. Colores en `theme` (champagne `#C5A059`, WhatsApp `#15803D`).
+3. Integraciones: `googleSheetId`, `appsScriptUrl`, Cloudinary y `uploaderPin`.
 
-Si `googleSheetId` está vacío, la web usa datos mock realistas.
+Sin `googleSheetId`, la web usa mocks realistas.
 
-## Google Sheets (CMS)
-
-Crea un spreadsheet público (o con acceso de lectura) con dos pestañas:
+## Google Sheets
 
 ### `Vehiculos`
 
-`id`, `marca`, `modelo`, `anio`, `kilometraje`, `transmision`, `combustible`, `motor`, `precio`, `linea`, `estado`, `destacado`, `descripcion`, `fotos`
+`id`, `marca`, `modelo`, `anio`, `kilometraje`, `transmision`, `combustible`, `motor`, `traccion`, `color`, `placa`, `blindaje`, `precio`, `linea`, `estado`, `destacado`, `descripcion`, `fotos`
 
 ### `Parcelas`
 
-`id`, `titulo`, `ubicacion`, `area_m2`, `precio`, `servicios`, `estado`, `destacado`, `descripcion`, `fotos`
+`id`, `titulo`, `ubicacion`, `area_m2`, `precio`, `servicios`, `topografia`, `documentacion`, `estado`, `destacado`, `descripcion`, `fotos`
 
-- `linea`: `Normal` | `Prestige` | `Importacion`
-- `estado`: `Disponible` | `Reservado` | `Vendido`
-- `destacado`: `SI` | `NO`
-- `fotos`: URLs separadas por comas
+## Rutas
 
-## Subida de fotos
-
-Ruta oculta: `/subir-fotos` (PIN por defecto `2026`).
-
-Sube imágenes a Cloudinary (preset sin firma) y copia el CSV de URLs para pegarlo en Sheets.
+- `/` Home editorial
+- `/vehiculos` y `/vehiculos/[id]`
+- `/prestige` y `/importacion`
+- `/parcelas` y `/parcelas/[id]`
+- `/nosotros#formteam`
+- `/contacto`
+- `/subir-fotos` (PIN interno)
 
 ## Scripts
 
-- `pnpm dev` — desarrollo
-- `pnpm build` — build de producción
-- `pnpm start` — servidor de producción
-- `pnpm lint` — ESLint
-
-## Deploy $0/mes
-
-Despliega en Vercel Free. No requiere base de datos propia.
+- `pnpm dev`
+- `pnpm build`
+- `pnpm start`
+- `pnpm lint`
