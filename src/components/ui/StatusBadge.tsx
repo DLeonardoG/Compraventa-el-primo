@@ -3,9 +3,9 @@ import type { InventoryStatus, VehicleLine } from "@/types/inventory";
 import { cn } from "@/lib/utils";
 
 const statusStyles: Record<InventoryStatus, string> = {
-  DISPONIBLE: "border-border text-muted bg-black/40",
-  RESERVADO: "border-border text-zinc-400 bg-[#18181C]",
-  VENDIDO: "border-border text-zinc-500 bg-[#111114]",
+  DISPONIBLE: "border-[#15803D]/60 text-[#15803D] bg-[#15803D]/10",
+  RESERVADO: "border-[#B45309]/60 text-[#B45309] bg-[#B45309]/10",
+  VENDIDO: "border-[#991B1B]/60 text-[#991B1B] bg-[#991B1B]/10",
 };
 
 export function StatusBadge({ status }: { status: InventoryStatus }) {
