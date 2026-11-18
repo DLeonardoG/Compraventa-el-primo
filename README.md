@@ -1,49 +1,28 @@
 # Compraventa El Primo S.A.S.
 
-Plantilla white-label Cloud-Light (Next.js + TypeScript + Tailwind + pnpm) para compraventa de vehículos y parcelas, con estética editorial de showroom, CMS en Google Sheets, uploads a Cloudinary y formularios vía Google Apps Script.
+Showroom editorial para vehículos, línea Prestige, importación bajo pedido y parcelas. Next.js en Vercel, Lakebase Postgres en Neon con Prisma, y archivos en Cloudflare R2 mediante URLs prefirmadas.
 
-## Arranque rápido
+## Arranque
 
 ```bash
 pnpm install
+pnpm db:push
+pnpm db:seed
 pnpm dev
 ```
 
-Abre [http://localhost:3000](http://localhost:3000).
+La identidad comercial vive en `src/config/site.config.ts`: nombre legal, WhatsApp, sede, redes y parámetros del simulador de crédito.
 
-## White-label
+## Variables
 
-Edita [`src/config/site.config.ts`](src/config/site.config.ts):
-
-1. `companyName`, `shortName`, contacto, horarios y redes.
-2. Colores en `theme` (champagne `#C5A059`, WhatsApp `#15803D`).
-3. Integraciones: `googleSheetId`, `appsScriptUrl`, Cloudinary y `uploaderPin`.
-
-Sin `googleSheetId`, la web usa mocks realistas.
-
-## Google Sheets
-
-### `Vehiculos`
-
-`id`, `marca`, `modelo`, `anio`, `kilometraje`, `transmision`, `combustible`, `motor`, `traccion`, `color`, `placa`, `blindaje`, `precio`, `linea`, `estado`, `destacado`, `descripcion`, `fotos`
-
-### `Parcelas`
-
-`id`, `titulo`, `ubicacion`, `area_m2`, `precio`, `servicios`, `topografia`, `documentacion`, `estado`, `destacado`, `descripcion`, `fotos`
+Copia `.env.example` a `.env`. Neon escribe `DATABASE_URL` y `DATABASE_URL_UNPOOLED`. Completa las credenciales de administrador y del bucket S3/R2 antes de publicar medios.
 
 ## Rutas
 
-- `/` Home editorial
-- `/vehiculos` y `/vehiculos/[id]`
+- `/` inicio
+- `/vehiculos` y `/vehiculos/[slug]`
 - `/prestige` y `/importacion`
-- `/parcelas` y `/parcelas/[id]`
+- `/parcelas` y `/parcelas/[slug]`
 - `/nosotros#formteam`
 - `/contacto`
-- `/subir-fotos` (PIN interno)
-
-## Scripts
-
-- `pnpm dev`
-- `pnpm build`
-- `pnpm start`
-- `pnpm lint`
+- `/admin` panel protegido con sesión JWT
