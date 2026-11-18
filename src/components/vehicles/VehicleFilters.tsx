@@ -21,6 +21,7 @@ type VehicleFiltersProps = {
   initialMinPrice?: string;
   initialMaxPrice?: string;
   initialAnioMin?: string;
+  initialLinea?: string;
 };
 
 export function VehicleFilters({
@@ -30,11 +31,16 @@ export function VehicleFilters({
   initialMinPrice = "",
   initialMaxPrice = "",
   initialAnioMin = "",
+  initialLinea = "",
 }: VehicleFiltersProps) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [q, setQ] = useState(initialQuery);
   const [marca, setMarca] = useState(initialMarca);
-  const [linea, setLinea] = useState<"" | VehicleLine>("");
+  const [linea, setLinea] = useState<"" | VehicleLine>(
+    initialLinea === "PRESTIGE" || initialLinea === "IMPORTACION" || initialLinea === "NORMAL"
+      ? initialLinea
+      : "",
+  );
   const [anioMin, setAnioMin] = useState(initialAnioMin);
   const [anioMax, setAnioMax] = useState("");
   const [transmision, setTransmision] = useState<"" | Transmission>("");

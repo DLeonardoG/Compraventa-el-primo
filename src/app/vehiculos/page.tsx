@@ -32,6 +32,7 @@ export default async function VehiculosPage({
         initialMinPrice={typeof params.minPrice === "string" ? params.minPrice : ""}
         initialMaxPrice={typeof params.maxPrice === "string" ? params.maxPrice : ""}
         initialAnioMin={typeof params.anioMin === "string" ? params.anioMin : ""}
+        initialLinea={typeof params.linea === "string" ? params.linea : ""}
       />
     </div>
   );
