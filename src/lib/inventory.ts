@@ -226,7 +226,7 @@ export async function getFeaturedVehicles(): Promise<Vehicle[]> {
       where: { destacado: true, estado: { not: "VENDIDO" } },
       include: { media: { orderBy: mediaOrder } },
       orderBy: { updatedAt: "desc" },
-      take: 8,
+      take: 6,
     });
     return rows.map(mapVehicle);
   });
