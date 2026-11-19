@@ -21,6 +21,7 @@ const tabs: Array<LeadTipo | "ALL"> = [
   "ALL",
   "CONSIGNACION",
   "IMPORTACION",
+  "FINANCIACION",
   "CITA",
   "CONTACTO",
 ];

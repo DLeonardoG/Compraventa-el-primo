@@ -14,7 +14,8 @@ export type LeadTipo =
   | "CONSIGNACION"
   | "IMPORTACION"
   | "CONTACTO"
-  | "CITA";
+  | "CITA"
+  | "FINANCIACION";
 
 export type MediaItem = {
   id: string;
