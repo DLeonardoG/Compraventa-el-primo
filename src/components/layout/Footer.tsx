@@ -3,7 +3,7 @@ import Link from "next/link";
 import { siteConfig } from "@/config/site.config";
 
 const shortcuts = [
-  { label: "Vender un vehículo", href: "/contacto" },
+  { label: "Vender un vehículo", href: "/vende-tu-vehiculo" },
   { label: "Línea Prestige", href: "/prestige" },
   { label: "Importación bajo pedido", href: "/importacion" },
   { label: "Parcelas y lotes", href: "/parcelas" },
