@@ -13,10 +13,18 @@ import { cn } from "@/lib/utils";
 type FinanceCalculatorProps = {
   price: number;
   title: string;
+  editablePrice?: boolean;
+  anchorId?: string;
 };
 
-export function FinanceCalculator({ price, title }: FinanceCalculatorProps) {
+export function FinanceCalculator({
+  price: initialPrice,
+  title,
+  editablePrice = false,
+  anchorId = "simulador",
+}: FinanceCalculatorProps) {
   const terms = siteConfig.financing.terms;
+  const [price, setPrice] = useState(initialPrice);
   const [downPaymentPct, setDownPaymentPct] = useState(30);
   const [months, setMonths] = useState<number>(terms[3] ?? 48);
   const rate = siteConfig.financing.defaultMonthlyRate;
@@ -49,13 +57,28 @@ export function FinanceCalculator({ price, title }: FinanceCalculatorProps) {
   );
 
   return (
-    <div id="simulador" className="scroll-mt-28 border border-border bg-card p-5">
+    <div id={anchorId} className="scroll-mt-36 border border-border bg-card p-5">
       <h3 className="heading-display text-lg font-bold">Simulador de crédito</h3>
       <p className="mt-1 text-sm text-muted">
         Calcula cuota inicial y plazo. {siteConfig.financing.legalNote}
       </p>
 
       <div className="mt-5 space-y-5">
+        {editablePrice ? (
+          <label className="block text-sm">
+            <span className="mb-2 block text-muted">
+              Valor del vehículo o monto deseado
+            </span>
+            <input
+              type="number"
+              min={0}
+              step={1000000}
+              value={price || ""}
+              onChange={(event) => setPrice(Number(event.target.value) || 0)}
+              className="input-field price-num"
+            />
+          </label>
+        ) : null}
         <label className="block text-sm">
           <span className="mb-2 flex items-center justify-between text-muted">
             <span>Cuota inicial ({downPaymentPct}%)</span>
