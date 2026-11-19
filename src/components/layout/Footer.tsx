@@ -1,5 +1,6 @@
 import { Clock3, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
+import { BrandLogo } from "@/components/brand/BrandLogo";
 import { siteConfig } from "@/config/site.config";
 
 const shortcuts = [
@@ -15,10 +16,8 @@ export function Footer() {
     <footer className="mt-20 border-t border-border bg-[#070709]">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
         <div>
-          <p className="heading-display text-xl font-bold text-foreground">
-            {siteConfig.shortName}
-          </p>
-          <p className="mt-2 text-[10px] uppercase tracking-[0.22em] text-subtle">
+          <BrandLogo className="h-28 w-28" />
+          <p className="mt-3 text-[10px] uppercase tracking-[0.22em] text-subtle">
             {siteConfig.city}
           </p>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">
