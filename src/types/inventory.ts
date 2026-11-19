@@ -4,6 +4,8 @@ export type FuelType = "Gasolina" | "Diésel" | "Híbrido" | "Eléctrico";
 
 export type VehicleLine = "NORMAL" | "PRESTIGE" | "IMPORTACION";
 
+export type VehicleCategory = "SUV" | "Automovil" | "Pickup";
+
 export type InventoryStatus = "DISPONIBLE" | "RESERVADO" | "VENDIDO";
 
 export type MediaTipo = "IMAGE" | "VIDEO";
@@ -38,6 +40,7 @@ export type Vehicle = {
   placa: string;
   blindaje: string;
   precio: number;
+  categoria: VehicleCategory;
   linea: VehicleLine;
   estado: InventoryStatus;
   destacado: boolean;

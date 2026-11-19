@@ -23,6 +23,7 @@ model Vehicle {
   placa       String
   blindaje    String   @default("Sin blindaje")
   precio      Float
+  categoria   String   @default("SUV")
   linea       String   @default("NORMAL")
   estado      String   @default("DISPONIBLE")
   destacado   Boolean  @default(false)
@@ -32,6 +33,7 @@ model Vehicle {
   updatedAt   DateTime @updatedAt
 
   @@index([marca])
+  @@index([categoria])
   @@index([linea])
   @@index([estado])
   @@index([destacado])

@@ -7,6 +7,7 @@ import type {
   Parcel,
   Transmission,
   Vehicle,
+  VehicleCategory,
   VehicleLine,
 } from "@/types/inventory";
 
@@ -30,6 +31,12 @@ function mapMedia(items: DbMedia[]): MediaItem[] {
     orden: item.orden,
     esPortada: item.esPortada,
   }));
+}
+
+function asCategory(value: string): VehicleCategory {
+  if (value === "Automovil" || value === "Automóvil") return "Automovil";
+  if (value === "Pickup" || value === "Pick-up") return "Pickup";
+  return "SUV";
 }
 
 function asLine(value: string): VehicleLine {
@@ -72,6 +79,7 @@ function mapVehicle(
     placa: string;
     blindaje: string;
     precio: number;
+    categoria: string;
     linea: string;
     estado: string;
     destacado: boolean;
@@ -94,6 +102,7 @@ function mapVehicle(
     placa: row.placa,
     blindaje: row.blindaje,
     precio: row.precio,
+    categoria: asCategory(row.categoria),
     linea: asLine(row.linea),
     estado: asStatus(row.estado),
     destacado: row.destacado,

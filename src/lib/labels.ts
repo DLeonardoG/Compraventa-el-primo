@@ -1,4 +1,14 @@
-import type { InventoryStatus, VehicleLine } from "@/types/inventory";
+import type {
+  InventoryStatus,
+  VehicleCategory,
+  VehicleLine,
+} from "@/types/inventory";
+
+export function categoryLabel(categoria: VehicleCategory): string {
+  if (categoria === "Automovil") return "Automóvil";
+  if (categoria === "Pickup") return "Pick-up";
+  return "SUV";
+}
 
 export function lineLabel(linea: VehicleLine): string {
   if (linea === "PRESTIGE") return "Prestige";
