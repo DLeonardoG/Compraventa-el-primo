@@ -4,6 +4,7 @@ import { ChevronDown, Clock, Mail, MapPin, Menu, MessageCircle, Phone, X } from 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { BrandLogo } from "@/components/brand/BrandLogo";
 import { useConsignment } from "@/components/providers/ConsignmentProvider";
 import { siteConfig } from "@/config/site.config";
 import { buildWhatsAppUrl, generalWhatsAppMessage } from "@/lib/formatters";
@@ -102,14 +103,9 @@ export function Navbar() {
       </div>
 
       <div className="border-b border-[#222226] bg-[#09090B]/95 backdrop-blur-md">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
-          <Link href="/" className="group shrink-0 leading-none">
-            <span className="heading-display block text-lg font-semibold tracking-[0.14em] text-[#F4F4F5] 2xl:text-xl 2xl:tracking-[0.16em]">
-              {siteConfig.shortName}
-            </span>
-            <span className="mt-1 block text-[9px] tracking-[0.18em] text-[#C5A059]">
-              COMPRAVENTA S.A.S.
-            </span>
+        <div className="mx-auto flex h-24 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
+          <Link href="/" className="shrink-0" aria-label={siteConfig.companyName}>
+            <BrandLogo priority className="h-[4.5rem] w-[4.5rem]" />
           </Link>
 
           <nav className="hidden items-center xl:flex xl:gap-3 2xl:gap-7">
@@ -188,10 +184,10 @@ export function Navbar() {
 
       {open ? (
         <div className="fixed inset-0 z-[70] flex flex-col bg-[#09090B] xl:hidden">
-          <div className="flex h-20 items-center justify-between border-b border-[#222226] px-4">
-            <p className="heading-display text-lg font-semibold tracking-[0.16em]">
-              {siteConfig.shortName}
-            </p>
+          <div className="flex h-24 items-center justify-between border-b border-[#222226] px-4">
+            <Link href="/" aria-label={siteConfig.companyName} onClick={() => setOpen(false)}>
+              <BrandLogo className="h-[4.5rem] w-[4.5rem]" />
+            </Link>
             <button
               type="button"
               onClick={() => setOpen(false)}
