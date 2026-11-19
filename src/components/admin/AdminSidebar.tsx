@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { BrandLogo } from "@/components/brand/BrandLogo";
 import {
   Briefcase,
   Car,
@@ -28,13 +29,16 @@ export function AdminSidebar() {
 
   return (
     <aside className="flex w-full flex-col border-b border-border bg-card lg:min-h-screen lg:w-64 lg:border-b-0 lg:border-r">
-      <div className="border-b border-border px-5 py-5">
-        <p className="text-[10px] uppercase tracking-[0.2em] text-accent">
-          Panel Admin
-        </p>
-        <p className="mt-1 text-sm font-semibold text-foreground">
-          {siteConfig.shortName}
-        </p>
+      <div className="flex items-center gap-3 border-b border-border px-5 py-4">
+        <BrandLogo className="h-12 w-12" />
+        <div>
+          <p className="text-[10px] uppercase tracking-[0.2em] text-accent">
+            Panel Admin
+          </p>
+          <p className="mt-1 text-sm font-semibold text-foreground">
+            {siteConfig.shortName}
+          </p>
+        </div>
       </div>
       <nav className="flex flex-1 flex-col gap-1 p-3">
         {links.map((link) => {
