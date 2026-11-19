@@ -15,6 +15,7 @@ import { deleteObjects } from "@/lib/storage";
 import type {
   InventoryStatus,
   MediaItem,
+  VehicleCategory,
   VehicleLine,
 } from "@/types/inventory";
 
@@ -130,6 +131,7 @@ export async function saveVehicle(input: {
   placa: string;
   blindaje: string;
   precio: number;
+  categoria: VehicleCategory;
   linea: VehicleLine;
   estado: InventoryStatus;
   destacado: boolean;
@@ -162,6 +164,7 @@ export async function saveVehicle(input: {
       placa: input.placa.trim(),
       blindaje: input.blindaje.trim() || "Sin blindaje",
       precio: input.precio,
+      categoria: input.categoria,
       linea: input.linea,
       estado: input.estado,
       destacado: input.destacado,

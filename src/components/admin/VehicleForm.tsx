@@ -10,9 +10,12 @@ import {
 import type {
   InventoryStatus,
   Vehicle,
+  VehicleCategory,
   VehicleLine,
 } from "@/types/inventory";
+import { categoryLabel } from "@/lib/labels";
 
+const categories: VehicleCategory[] = ["SUV", "Automovil", "Pickup"];
 const lines: VehicleLine[] = ["NORMAL", "PRESTIGE", "IMPORTACION"];
 const statuses: InventoryStatus[] = ["DISPONIBLE", "RESERVADO", "VENDIDO"];
 
@@ -46,6 +49,7 @@ export function VehicleForm({ vehicle }: VehicleFormProps) {
       placa: String(form.get("placa") || ""),
       blindaje: String(form.get("blindaje") || "Sin blindaje"),
       precio: Number(form.get("precio") || 0),
+      categoria: String(form.get("categoria") || "SUV") as VehicleCategory,
       linea: String(form.get("linea") || "NORMAL") as VehicleLine,
       estado: String(form.get("estado") || "DISPONIBLE") as InventoryStatus,
       destacado,
@@ -88,6 +92,15 @@ export function VehicleForm({ vehicle }: VehicleFormProps) {
           label="Combustible"
           defaultValue={vehicle?.combustible ?? "Gasolina"}
           options={["Gasolina", "Diésel", "Híbrido", "Eléctrico"]}
+        />
+        <Select
+          name="categoria"
+          label="Categoría"
+          defaultValue={vehicle?.categoria ?? "SUV"}
+          options={categories.map((item) => ({
+            value: item,
+            label: categoryLabel(item),
+          }))}
         />
         <Select name="linea" label="Línea" defaultValue={vehicle?.linea ?? "NORMAL"} options={lines} />
         <Select name="estado" label="Estado" defaultValue={vehicle?.estado ?? "DISPONIBLE"} options={statuses} />
@@ -177,7 +190,7 @@ function Select({
   name: string;
   label: string;
   defaultValue: string;
-  options: string[];
+  options: Array<string | { value: string; label: string }>;
 }) {
   return (
     <label className="block space-y-1.5">
@@ -189,11 +202,15 @@ function Select({
         defaultValue={defaultValue}
         className="w-full border border-border bg-elevated px-3 py-2 text-sm outline-none focus:border-accent"
       >
-        {options.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
+        {options.map((option) => {
+          const value = typeof option === "string" ? option : option.value;
+          const text = typeof option === "string" ? option : option.label;
+          return (
+            <option key={value} value={value}>
+              {text}
+            </option>
+          );
+        })}
       </select>
     </label>
   );
