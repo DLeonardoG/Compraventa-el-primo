@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { login, type LoginState } from "@/app/admin/actions";
+import { BrandLogo } from "@/components/brand/BrandLogo";
 import { siteConfig } from "@/config/site.config";
 
 const initial: LoginState = {};
@@ -16,6 +17,7 @@ export default function AdminLoginPage() {
         className="w-full max-w-md space-y-5 border border-border bg-card p-6 rounded-sm"
       >
         <div>
+          <BrandLogo className="mb-4 h-24 w-24" />
           <p className="text-[10px] uppercase tracking-[0.2em] text-accent">
             Acceso restringido
           </p>
