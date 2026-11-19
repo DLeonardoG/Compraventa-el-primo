@@ -8,8 +8,10 @@ export const siteConfig = {
   email: "contacto@compraventaelprimo.com",
   address: "Sede principal",
   city: "Medellín",
+  region: "Antioquia",
   schedule:
     "Lunes a viernes: 8:00 a.m. – 6:00 p.m. | Sábados: 8:30 a.m. – 2:00 p.m.",
+  hoursCompact: "Lun - Vie: 8:00 AM - 6:00 PM · Sáb: 8:30 AM - 2:00 PM",
   mapEmbedUrl:
     "https://maps.google.com/maps?q=Medellin%20Colombia&t=&z=13&ie=UTF8&iwloc=&output=embed",
   social: {
@@ -41,11 +43,32 @@ export const siteConfig = {
   },
   nav: [
     { label: "Inicio", href: "/" },
-    { label: "Vehículos", href: "/vehiculos" },
-    { label: "Línea Prestige", href: "/prestige" },
+    {
+      label: "Vehículos",
+      href: "/vehiculos",
+      children: [
+        { label: "Todo el inventario", href: "/vehiculos" },
+        { label: "Camionetas y SUV", href: "/vehiculos?categoria=SUV" },
+        { label: "Automóviles", href: "/vehiculos?categoria=Automovil" },
+        { label: "Pick-ups y 4x4", href: "/vehiculos?categoria=Pickup" },
+        {
+          label: "Disponibles entrega inmediata",
+          href: "/vehiculos?estado=DISPONIBLE",
+        },
+      ],
+    },
+    { label: "Línea Prestige", href: "/prestige", accent: true },
     { label: "Importación", href: "/importacion" },
     { label: "Parcelas", href: "/parcelas" },
-    { label: "Nosotros", href: "/nosotros" },
+    { label: "Financiación", href: "/financiacion" },
+    {
+      label: "Nosotros",
+      href: "/nosotros",
+      children: [
+        { label: "Nuestra empresa y respaldo", href: "/nosotros" },
+        { label: "Trabaja con nosotros", href: "/nosotros#formteam" },
+      ],
+    },
     { label: "Contacto", href: "/contacto" },
   ],
 } as const;
