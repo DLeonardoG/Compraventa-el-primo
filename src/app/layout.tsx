@@ -25,6 +25,10 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.shortName}`,
   },
   description: siteConfig.tagline,
+  icons: {
+    icon: [{ url: "/brand/favicon.webp", type: "image/webp", sizes: "192x192" }],
+    apple: [{ url: "/brand/apple-touch.png", type: "image/png", sizes: "180x180" }],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
