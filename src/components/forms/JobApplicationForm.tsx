@@ -97,7 +97,7 @@ export function JobApplicationForm() {
     <form
       id="formteam"
       onSubmit={onSubmit}
-      className="scroll-mt-24 space-y-4 border border-border bg-card p-5 sm:p-6"
+      className="scroll-mt-36 space-y-4 border border-border bg-card p-5 sm:p-6"
     >
       <h2 className="heading-display text-xl font-bold">Trabaja con nosotros</h2>
       <p className="text-sm text-muted">
