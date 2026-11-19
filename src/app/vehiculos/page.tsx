@@ -26,9 +26,21 @@ export default async function VehiculosPage({
         description="Filtra por marca, línea, año, transmisión, combustible y presupuesto. Oculta vendidos y ordena resultados."
       />
       <VehicleFilters
+        key={[
+          params.q,
+          params.marca,
+          params.categoria,
+          params.estado,
+          params.linea,
+          params.minPrice,
+          params.maxPrice,
+          params.anioMin,
+        ].join("|")}
         vehicles={vehicles}
         initialQuery={typeof params.q === "string" ? params.q : ""}
         initialMarca={typeof params.marca === "string" ? params.marca : ""}
+        initialCategoria={typeof params.categoria === "string" ? params.categoria : ""}
+        initialEstado={typeof params.estado === "string" ? params.estado : ""}
         initialMinPrice={typeof params.minPrice === "string" ? params.minPrice : ""}
         initialMaxPrice={typeof params.maxPrice === "string" ? params.maxPrice : ""}
         initialAnioMin={typeof params.anioMin === "string" ? params.anioMin : ""}

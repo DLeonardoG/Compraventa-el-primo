@@ -8,8 +8,10 @@ import type {
   InventoryStatus,
   Transmission,
   Vehicle,
+  VehicleCategory,
   VehicleLine,
 } from "@/types/inventory";
+import { categoryLabel } from "@/lib/labels";
 import { cn } from "@/lib/utils";
 
 type SortKey = "recent" | "price-asc" | "price-desc" | "km-asc";
@@ -22,6 +24,8 @@ type VehicleFiltersProps = {
   initialMaxPrice?: string;
   initialAnioMin?: string;
   initialLinea?: string;
+  initialCategoria?: string;
+  initialEstado?: string;
 };
 
 export function VehicleFilters({
@@ -32,6 +36,8 @@ export function VehicleFilters({
   initialMaxPrice = "",
   initialAnioMin = "",
   initialLinea = "",
+  initialCategoria = "",
+  initialEstado = "",
 }: VehicleFiltersProps) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [q, setQ] = useState(initialQuery);
@@ -41,13 +47,26 @@ export function VehicleFilters({
       ? initialLinea
       : "",
   );
+  const [categoria, setCategoria] = useState<"" | VehicleCategory>(
+    initialCategoria === "SUV" ||
+      initialCategoria === "Automovil" ||
+      initialCategoria === "Pickup"
+      ? initialCategoria
+      : "",
+  );
   const [anioMin, setAnioMin] = useState(initialAnioMin);
   const [anioMax, setAnioMax] = useState("");
   const [transmision, setTransmision] = useState<"" | Transmission>("");
   const [combustible, setCombustible] = useState<"" | FuelType>("");
   const [minPrice, setMinPrice] = useState(initialMinPrice);
   const [maxPrice, setMaxPrice] = useState(initialMaxPrice);
-  const [estado, setEstado] = useState<"" | InventoryStatus>("");
+  const [estado, setEstado] = useState<"" | InventoryStatus>(
+    initialEstado === "DISPONIBLE" ||
+      initialEstado === "RESERVADO" ||
+      initialEstado === "VENDIDO"
+      ? initialEstado
+      : "",
+  );
   const [hideSold, setHideSold] = useState(true);
   const [sort, setSort] = useState<SortKey>("recent");
 
@@ -59,6 +78,7 @@ export function VehicleFilters({
   function clearFilters() {
     setQ("");
     setMarca("");
+    setCategoria("");
     setLinea("");
     setAnioMin("");
     setAnioMax("");
@@ -77,6 +97,7 @@ export function VehicleFilters({
         `${vehicle.marca} ${vehicle.modelo} ${vehicle.descripcion}`.toLowerCase();
       if (q && !haystack.includes(q.toLowerCase())) return false;
       if (marca && vehicle.marca !== marca) return false;
+      if (categoria && vehicle.categoria !== categoria) return false;
       if (linea && vehicle.linea !== linea) return false;
       if (anioMin && vehicle.anio < Number(anioMin)) return false;
       if (anioMax && vehicle.anio > Number(anioMax)) return false;
@@ -99,6 +120,7 @@ export function VehicleFilters({
     vehicles,
     q,
     marca,
+    categoria,
     linea,
     anioMin,
     anioMax,
@@ -124,6 +146,18 @@ export function VehicleFilters({
         {marcas.map((item) => (
           <option key={item} value={item}>
             {item}
+          </option>
+        ))}
+      </select>
+      <select
+        value={categoria}
+        onChange={(e) => setCategoria(e.target.value as "" | VehicleCategory)}
+        className="input-field"
+      >
+        <option value="">Todas las carrocerías</option>
+        {(["SUV", "Automovil", "Pickup"] as const).map((item) => (
+          <option key={item} value={item}>
+            {categoryLabel(item)}
           </option>
         ))}
       </select>
@@ -217,7 +251,7 @@ export function VehicleFilters({
   return (
     <div className="grid gap-8 lg:grid-cols-[260px_1fr]">
       <aside className="hidden lg:block">
-        <div className="sticky top-24 border border-border bg-card p-4">
+        <div className="sticky top-28 border border-border bg-card p-4">
           <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.18em] text-accent">
             Filtros
           </p>
